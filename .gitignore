@@ -1,2 +1,6 @@
 philo
 objs
+*.swp
+.DS_Store
+a.out
+
