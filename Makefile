@@ -1,7 +1,7 @@
 
 
 CC			=	gcc
-CFLAGS		=	-Wall -Werror -Wextra
+CFLAGS		=	-Wall -Werror -Wextra -pthread
 # might need to add -pthread somewhere could do it in flags
 
 NAME		=	philo
@@ -17,8 +17,10 @@ SRCS_PHILO	=	philo_main.c \
 DIR_MINILIB	=	./minilib/
 SRCS_MINILIB	=	atoi_funcs.c \
 					big_str_funcs.c \
+					error_funcs.c \
 					ft_split.c \
 					ft_strjoin.c \
+					is_funcs.c \
 					list_funcs.c \
 					nlist_funcs.c \
 					nlstdel_n_one.c \
@@ -43,8 +45,6 @@ OBJ_MINILIB	=	$(SRCS_MINILIB:.c=.o)
 OBJ_PHILO	=	$(SRCS_PHILO:.c=.o) $(OBJ_MINILIB)
 
 OBJS_PHILO	=	$(addprefix $(DIR_OBJ),$(OBJ_PHILO))
-
-
 
 
 ##### RULES ######

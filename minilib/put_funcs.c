@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 19:32:43 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/08/11 02:14:50 by ericlazo         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:01:35 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,16 @@ void	ft_putstr(char const *s)
 	}
 }
 
-long	ft_scott_free(char **str, int ret)
+void	ft_putstr_fd(char const *s, int fd)
 {
-	if (str && *str)
+	int		a;
+
+	a = 0;
+	if (!s)
+		return ;
+	while ((char)s[a])
 	{
-		ft_bzero(*str, (int)ft_strlen(*str));
-		free(*str);
-		*str = NULL;
+		write(fd, (void *)&s[a], 1);
+		++a;
 	}
-	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 13:01:06 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/08/17 22:07:50 by ericlazo         ###   ########.fr       */
+/*   Updated: 2021/12/15 01:00:53 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,16 +126,19 @@ int		main(int ac, char **av)
 		all.iset[4] = -1;
 	else if (ac != 6)
 		return (ft_error_msg("ERROR: Bad Arguments\n", 0));
+		// use error_msg_fd?
 
 
 	// gotta init the Threads (here or possibly below...)
 		// ac too?
-	if (!ft_parser(av, &all))
+	// in theory nothing to free yet if fails.
+	if (!ft_parser(&av[1], &all))
 		return (ft_error_msg("ERROR: Parser Failed\n", 0));
 
+		// does stuff need to be freed in case of error?
 	if (!ft_init(&all))
 		return (ft_error_msg("ERROR: INIT Failed\n", 0));
-	i = ft_start(&all);
+//	i = ft_start(&all);
 	if (i > all.iset[0])	// means no philos died
 		printf("cool no one died\n");	// def change later
 

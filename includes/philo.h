@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 14:13:27 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/08/17 22:15:45 by ericlazo         ###   ########.fr       */
+/*   Updated: 2021/12/15 01:02:45 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 
 // some useful generic Includes
 
+	// printf is allowed :)
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <pthread.h>
-
-	// it isn't allowed...
-//#include "libft.h"
 
 	// need it...
 # include "minilib.h"
@@ -42,6 +40,7 @@ typedef struct	s_settings
 
 
 # define TOTALPS 0
+
 # define NPHILO 0
 # define TTDIE 1
 # define TTEAT 2
@@ -51,7 +50,9 @@ typedef struct	s_settings
 typedef struct s_philo
 {
 	int				id;
-	pthread			id_thread;
+
+	// should this be pthread_t?
+	pthread_t		thread;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	l_fork;
 	
@@ -65,9 +66,9 @@ typedef struct s_philo
 
 typedef struct s_ph
 {
-	t_philo	*philos;
+	t_philo	*philos;	// will end up being a table of pointers to struct.
 
-	int		iset[5];
+	int		iset[5];	// initial settings.
 
 	pthread_mutext_t	write_lock;
 	

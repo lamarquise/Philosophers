@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 19:44:54 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/08/10 20:20:23 by ericlazo         ###   ########.fr       */
+/*   Updated: 2021/12/10 09:01:52 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,6 @@ int	ft_findchar(char *str, char c)
 		++i;
 	}
 	return (-1);
-}
-
-long	ft_error_msg(char *str, int ret)
-{
-	if (!str)
-		return (ret);
-	ft_putstr(str);
-	return (ret);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)
@@ -71,13 +63,12 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-	// move it later...
 char	*ft_strchr(const char *s, int c)
 {
 	int		a;
 	char	*tmp;
 
-	tmp = (char*)s;
+	tmp = (char *)s;
 	a = 0;
 	while (tmp[a] || (tmp[a] == '\0' && (char)c == '\0'))
 	{
