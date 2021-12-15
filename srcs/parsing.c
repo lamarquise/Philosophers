@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 13:16:03 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/15 01:02:51 by me               ###   ########.fr       */
+/*   Updated: 2021/12/15 16:07:20 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		ft_parser(char **av, t_philo *all)
 	while (av[i])
 	{
 		// is this enough of a check?
+		// Do i need to check if there is at least 2 philos? is 1 fine? like expected? to just let him die?
 		// could have more specific messages...
 		if (!ft_str_isdigit(av[i]))
 			return (0);
@@ -56,6 +57,7 @@ int		ft_parser(char **av, t_philo *all)
 }
 
 
+// 	this should be in a differnt file...
 int		ft_init(t_ph *all)
 {
 	int	i;
@@ -76,12 +78,17 @@ int		ft_init(t_ph *all)
 	{
 		all->philos[i]->id = i + 1;
 		pthread_mutex_init(&all->philos[i]->l_fork, NULL);
-		all->philos[i]->r_fork = all->philos[i + 1]->l_fork;
+		// if there can be only 1 philo this will crash? need to check if that's allowed.
+		if (i + 1 == all->iset[NPHILO])
+			all->philos[i]->r_fork = all->philos[0]->l_fork;
+		else
+			all->philos[i]->r_fork = all->philos[i + 1]->l_fork;
 		pthread_create(&all->philos[i]->thread, NULL, &ft_philo_go, (void *)all);
 		++i;
 	}
 
 	// maybe this part does belong is "ft_start" or something...
+	i = 0;
 	while (i < all->iset[NPHILO])
 	{
 		// might want a place to get a return from this...
@@ -92,6 +99,24 @@ int		ft_init(t_ph *all)
 
 	return (1);
 }
+
+
+// obivously move this but here for now
+// The thread that checks if a philo is dead...
+	// a thread func
+void	*ft_check_if_dead(void *arg)
+{
+	t_ph	*all;
+
+	all = arg;
+
+
+
+}
+
+
+
+
 
 
 
