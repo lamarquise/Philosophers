@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 22:08:07 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/15 15:28:54 by erlazo           ###   ########.fr       */
+/*   Updated: 2021/12/16 00:32:25 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,3 +37,18 @@ long int	ft_time_rn(void)
 	cur_time = (sys_time.tv_sec * 1000) + (sys_time.tv_usec / 1000);
 	return (cur_time);
 }
+
+
+// an msleep() func, milliseconds sleep rather than usleep or sleep...
+
+
+
+
+
+
+
+
+
+
+
+

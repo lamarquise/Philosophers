@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 13:01:06 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/15 01:00:53 by me               ###   ########.fr       */
+/*   Updated: 2021/12/15 23:24:50 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,17 @@ int		ft_start(t_philo *all)
 //	printf("i after threads joined: %d\n", i);
 	return (i);
 }
+
+// ok what is our logic:
+// we check if the inputs are good
+// we initialize what needs to be initialized
+	// mutex, malloc all that
+// we start the check if dead thread first? set vars of philos to something neg
+	// so it knows they don't exist yet?
+// we start the philo threads
+// And we let it run...
+
+
 
 
 int		main(int ac, char **av)
