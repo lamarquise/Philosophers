@@ -6,32 +6,16 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 13:16:03 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/15 23:24:48 by me               ###   ########.fr       */
+/*   Updated: 2021/12/17 03:32:41 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-	// almost certainly move this...
-int		ft_print_all_settings(t_philo *all)
-{
-	int	i;
-
-	printf("--- Print All iSettings\n");
-	if (!all)
-		return (0);
-	i = 0;
-	while (i < 5)
-	{
-		ft_putnbrnl(all->iset[i]);
-		++i;
-	}
-	return (1);
-}
 
 	// may do initiallizing in here too
 		// or maybe just settings... IDK yet
-int		ft_parser(char **av, t_philo *all)
+int		ft_parser(char **av, t_ph *all)
 {
 	int	i;
 
@@ -53,18 +37,13 @@ int		ft_parser(char **av, t_philo *all)
 			return (0);
 		++i;
 	}
+	if (all->iset[NEAT] == 0)
+		return (1);
 	// more checks?
 
 //	ft_print_all_settings(all);
 	return (1);
 }
-
-
-
-
-
-
-
 
 
 

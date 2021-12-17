@@ -10,6 +10,9 @@ DIR_PHILO	=	./srcs/
 
 SRCS_PHILO	=	philo_main.c \
 				parsing.c \
+				init.c \
+				philo_go.c \
+				printing.c \
 				time.c \
 
 

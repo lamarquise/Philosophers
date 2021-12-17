@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 13:01:06 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/15 23:24:50 by me               ###   ########.fr       */
+/*   Updated: 2021/12/17 00:47:25 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	*test_write(void *all)
 	// Testing Threads to start...
 	// i want to have 2 philos share a fork... and go back and forth
 		// between eating, telling me what's up at the same time
+/*
 int		ft_start(t_philo *all)
 {
 	int 		i;
@@ -115,6 +116,9 @@ int		ft_start(t_philo *all)
 //	printf("i after threads joined: %d\n", i);
 	return (i);
 }
+*/
+
+
 
 // ok what is our logic:
 // we check if the inputs are good
@@ -130,7 +134,7 @@ int		ft_start(t_philo *all)
 
 int		main(int ac, char **av)
 {
-	int			i;
+//	int			i;
 	t_ph		all;
 	
 	if (ac == 5)
@@ -147,11 +151,17 @@ int		main(int ac, char **av)
 		return (ft_error_msg("ERROR: Parser Failed\n", 0));
 
 		// does stuff need to be freed in case of error?
-	if (!ft_init(&all))
+	if (!ft_init_all(&all))
 		return (ft_error_msg("ERROR: INIT Failed\n", 0));
+
+
+		// prolly secure and free and all that...
+	ft_start(&all);
+
+
 //	i = ft_start(&all);
-	if (i > all.iset[0])	// means no philos died
-		printf("cool no one died\n");	// def change later
+//	if (i > all.iset[0])	// means no philos died
+//		printf("cool no one died\n");	// def change later
 
 
 

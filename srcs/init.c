@@ -6,11 +6,11 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 23:25:04 by me                #+#    #+#             */
-/*   Updated: 2021/12/16 00:32:21 by me               ###   ########.fr       */
+/*   Updated: 2021/12/17 04:27:27 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philo.h"
 
 // should init file be called start?
 // should i have a separate start file?
@@ -28,6 +28,13 @@ int		ft_init_all(t_ph *all)
 	i = 0;
 	if (!all)
 		return (0);
+
+	// i need a bit init all the vars area
+	all->good = 1;
+
+		// is this the right place to put this?
+	all->start_time = ft_time_rn();
+
 	pthread_mutex_init(&all->write_lock, NULL);
 	all->philos = (t_philo *)malloc(sizeof(t_philo) * all->iset[NPHILO]);
 	if (!all->philos)
@@ -37,16 +44,20 @@ int		ft_init_all(t_ph *all)
 	while (i < all->iset[NPHILO])
 	{
 			// should it be i+1 ? or i could always add 1 when print... ?
-		all->philos[i]->id = i + 1;
-		all->philos[i]->home = all;
-		pthread_mutex_init(&all->philos[i]->l_fork, NULL);
+		all->philos[i].id = i + 1;
+		printf("in init, philo id: %d\n", all->philos[i].id);
+		all->philos[i].times_eaten = 0;
+		//all->philos[i].last_ate = all->start_time;
+		all->philos[i].last_ate = 0;
+		all->philos[i].home = all;
+		pthread_mutex_init(&all->philos[i].l_fork, NULL);
 		// if there can be only 1 philo this will crash? need to check if that's allowed.
 		if (all->iset[NPHILO] == 1)
-			all->philos[i]->r_fork = NULL;
+			all->philos[i].r_fork = NULL;
 		else if (i + 1 == all->iset[NPHILO])
-			all->philos[i]->r_fork = all->philos[0]->l_fork;
+			all->philos[i].r_fork = &all->philos[0].l_fork;
 		else
-			all->philos[i]->r_fork = all->philos[i + 1]->l_fork;
+			all->philos[i].r_fork = &all->philos[i + 1].l_fork;
 		++i;
 	}
 
@@ -57,6 +68,7 @@ int		ft_init_all(t_ph *all)
 
 // maybe have a func that does normal stuff inside a mutex?
 
+	// this should prolly be moved
 int	ft_start(t_ph *all)
 {
 	int	i;
@@ -71,7 +83,7 @@ int	ft_start(t_ph *all)
 	while (i < all->iset[NPHILO])
 	{
 		// i might need to send the specific philo instead of everything...
-		pthread_create(&all->philos[i]->thread, NULL, &ft_philo_go, (void *)all);
+		pthread_create(&all->philos[i].thread, NULL, &ft_philo_go, (void *)all);
 		++i;
 	}
 
@@ -80,7 +92,7 @@ int	ft_start(t_ph *all)
 	{
 		// you need to sort out the return for this..
 		// should this be in an if?
-		pthread_join(all->philos[i]->thread, NULL);
+		pthread_join(all->philos[i].thread, NULL);
 
 		++i;
 	}
