@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 14:13:27 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/17 04:27:31 by me               ###   ########.fr       */
+/*   Updated: 2021/12/17 19:37:04 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,10 @@ typedef struct s_ph
 	int					good;	// a bool that be like yea no one has died yet
 								// but also haven't reached everyone has eaten
 								// the required amount.
+	pthread_mutex_t	end;
+	// experimenting with more mutex
+	
+	// maybe i need a time mutex?
 
 	// prolly gonna need some other stuff, like start time..
 
@@ -122,11 +126,12 @@ int			ft_init_all(t_ph *all);
 int			ft_start(t_ph *all);
 
 /*
-**		Philo_Go
+**		Threads
 */
 
-void		*ft_philo_go(void *arg);
-void		*ft_check_if_dead(void *arg);
+void		*ft_philo_thread(void *arg);
+// maybe call end thread? cuz it also ends if none dead but ate enough... IDK
+void		*ft_death_thread(void *arg);
 
 /*
 **		Printing

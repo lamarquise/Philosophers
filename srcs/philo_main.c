@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 13:01:06 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/17 00:47:25 by me               ###   ########.fr       */
+/*   Updated: 2021/12/17 19:37:01 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,32 @@ int		ft_start(t_philo *all)
 
 
 
+// will surely need a free.c but for now keeping it here
+
+int		ft_free_all_philos(t_ph *all)
+{
+	int	i;
+
+	i = 0;
+	while (i < all->iset[NPHILO])
+	{
+		pthread_mutex_destroy(&all->philos[i].l_fork);
+		all->philos[i].r_fork = NULL;
+		all->philos[i].home = NULL;
+		++i;
+	}
+	free(all->philos);
+	return (1);
+}
+
+int		ft_free_ph_struct(t_ph *all)
+{
+	pthread_mutex_destroy(&all->write_lock);
+	pthread_mutex_destroy(&all->end);
+
+	return (1);
+}
+
 
 int		main(int ac, char **av)
 {
@@ -158,12 +184,13 @@ int		main(int ac, char **av)
 		// prolly secure and free and all that...
 	ft_start(&all);
 
-
+	printf("made it to end of MAIN\n");
 //	i = ft_start(&all);
 //	if (i > all.iset[0])	// means no philos died
 //		printf("cool no one died\n");	// def change later
 
-
+	ft_free_all_philos(&all);
+	ft_free_ph_struct(&all);
 
 	return (1);
 }

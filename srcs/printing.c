@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 23:33:10 by me                #+#    #+#             */
-/*   Updated: 2021/12/17 04:27:25 by me               ###   ########.fr       */
+/*   Updated: 2021/12/17 18:59:55 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		ft_print_all_settings(t_ph *all)
 		++i;
 	}
 	printf("all start time: %ld\n", all->start_time);
+	printf("--- DONE Print All iSettings\n");
 	return (1);
 }
 
@@ -91,7 +92,9 @@ int	ft_print_philo_status(t_philo *boi, int msg)
 	cur_time = ft_time_rn() - boi->home->start_time;
 
 	ft_putlong(cur_time);
-	ft_putchar(' ');
+//	ft_putchar(' ');
+//	adding ms after time, so clearer, make sure that's ok with sujet or other peole
+	ft_putstr("ms ");
 	ft_putnbr(boi->id);
 	if (msg == GOT_FORK)
 		ft_putstr(" has taken a fork\n");
