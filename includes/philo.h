@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 14:13:27 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/17 19:37:04 by erlazo           ###   ########.fr       */
+/*   Updated: 2021/12/19 18:00:01 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,12 @@ typedef struct s_philo
 		// does last ate need a mutex?
 	long int		last_ate;	// so this is time it last ate - start time
 
-	// im gonna need some other stuff, like time of creation
-	// time it ate...
-	// should this be pthread_t?
 	pthread_t		thread;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	l_fork;
 	// we could keep all forks in t_ph in a table and reference them from here
 	// as pointers?
 	
-	// i don't want to point back to the iset args nor do i want them
-	// each to have their own copy...
-	// I want them only to know what they need to know...
-	// I will if i have to tho, like minilibx....
-
-	// temporarily adding this just in case...
 	struct s_ph		*home;
 }				t_philo;
 
@@ -71,7 +62,6 @@ typedef struct s_ph
 	t_philo				*philos;	// will end up being a table of pointers to struct.
 	int					iset[5];	// initial settings.
 	pthread_mutex_t	write_lock;
-	
 	pthread_t			death;
 
 		// does it need to be protected by a mutex?
@@ -83,9 +73,7 @@ typedef struct s_ph
 	// experimenting with more mutex
 	
 	// maybe i need a time mutex?
-
 	// prolly gonna need some other stuff, like start time..
-
 	long int			start_time;
 }				t_ph;
 

@@ -6,21 +6,13 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 01:01:04 by me                #+#    #+#             */
-/*   Updated: 2021/12/17 19:36:57 by erlazo           ###   ########.fr       */
+/*   Updated: 2021/12/19 18:00:04 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // different name?
 
 #include "philo.h"
-
-	// ok what that fuck the philo suposed to do...
-// well for starters some of them wait before trying to take a fork
-	// the odd or even ones, pick
-// Then they need to try to grab a fork
-
-
-
 
 // The thread that the Philos run
 void	*ft_philo_thread(void *arg)
@@ -33,19 +25,18 @@ void	*ft_philo_thread(void *arg)
 //	printf("made into a philo thread, id: %d\n", boi->id);
 //	ft_print_all_philos(boi->home);
 //	pthread_mutex_unlock(&boi->home->write_lock);
+		// should i add more clever logic to when the philos should grab forks?
 	if (boi->id % 2 == 0)
 		usleep(100);
-
 
 		// obviously this didn't work...
 //	pthread_mutex_lock(&boi->home->end);
 
 	// ok i need a way to stop this, i'm guessing when one has died...
+//	int	i = 0;
+//	while (i < 4)
 	while (boi->home->good)
 	{
-		// do some philosophizing...
-
-		// should i add more clever logic to when the philos should grab forks?
 		// should these be in a dif order?
 		pthread_mutex_lock(&boi->l_fork);
 		pthread_mutex_lock(boi->r_fork);	// like this to dereference?
@@ -79,22 +70,27 @@ void	*ft_philo_thread(void *arg)
 		msleep(boi->home->iset[TTSLEEP]);
 		ft_print_philo_status(boi, THINKING);
 			// but no sleep you could in theory start eating imediately after.
-
+//		++i;
 	}
 //	pthread_mutex_unlock(&boi->home->end);
 
 
+	pthread_mutex_lock(&boi->home->write_lock);
 	printf("made it to end of PHILO THREAD, philo id: %d,  all->good = %d\n", boi->id, boi->home->good);
+	pthread_mutex_unlock(&boi->home->write_lock);
 
 	// maybe there's a return?
 	// temporary to shut up the compiler
 	return ((void *)boi);
+	// could return (NULL);
 }
 
 // possibly tmp
 int		ft_all_good(t_ph *all)
 {
 	int i;
+
+	// not convinced this shit works properly...
 	int	full;
 
 	if (!all)
@@ -104,11 +100,14 @@ int		ft_all_good(t_ph *all)
 	while (i < all->iset[NPHILO])
 	{
 		// check this condition again, make sure it actually does what you want.
+		// do i need mutex here?
+		// just around last ate?
 		if (ft_time_rn() - all->start_time - all->philos[i].last_ate > all->iset[TTDIE])
 		{
 			ft_print_philo_status(&all->philos[i], DIED);
 			return (0);
 		}
+		// do i need a mutex here? around times eaten?
 		if (all->iset[NEAT] > 0 && all->philos[i].times_eaten == all->iset[NEAT])
 			++full;
 		++i;
@@ -129,12 +128,14 @@ void	*ft_death_thread(void *arg)
 	t_ph	*all;
 
 	all = arg;
+	// should i call this everytime a philo updates its status?
+		// not sure how to do that...
 
-	pthread_mutex_lock(&all->write_lock);
-	printf("checking if anything is dead\n");
-	ft_print_all_settings(all);
-	ft_print_all_philos(all);
-	pthread_mutex_unlock(&all->write_lock);
+//	pthread_mutex_lock(&all->write_lock);
+//	printf("checking if anything is dead\n");
+//	ft_print_all_settings(all);
+//	ft_print_all_philos(all);
+//	pthread_mutex_unlock(&all->write_lock);
 	// if one dies, print dead and set good to good.
 
 	while (all->good)
@@ -145,29 +146,6 @@ void	*ft_death_thread(void *arg)
 //		pthread_mutex_unlock(&all->end);
 		// i doubt this is where i would free stuff in the event of all->good = 0...
 			// prolly above, in main or something...
-/*
-		full = 0;
-		i = 0;
-		while (i < all->iset[NPHILO])
-		{
-			// is there a mutex i need to lock here?
-			// is a philo dead Check:
-		//	if (all->philos[i].last_ate + all->iset[TTDIE] \
-		//		<= ft_time_rn() - all->start_time)
-			if (ft_time_rn() - all->start_time - all->philos[i].last_ate > all->iset[TTDIE])
-			{
-				all->good = 0;
-				ft_print_philo_status(&all->philos[i], DIED);
-				
-			}
-			if (all->iset[NEAT] > 0 && all->philos[i].times_eaten == all->iset[NEAT])
-				++full;
-			++i;
-		}
-		if (full == all->iset[NPHILO])
-			all->good = 0;
-*/
-
 
 
 		// basically it checks all philo and sees if they haven't eaten recenlty
@@ -177,13 +155,12 @@ void	*ft_death_thread(void *arg)
 
 		// remeber to mutex lock all the vars you check that philos can change.
 
-		// prolly a usleep to make so it doesn't check all the time?
-		// or i call it everytime a philo updates its status?
-			// not sure how to do that...
 		usleep(100);
 	}
 
+	pthread_mutex_lock(&all->write_lock);
 	printf("made it to end of DEATH THREAD, all->good = %d\n", all->good);
+	pthread_mutex_unlock(&all->write_lock);
 	// to shut up the compiler, will figur out later
 	return ((void *)all);
 }

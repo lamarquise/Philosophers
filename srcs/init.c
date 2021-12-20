@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 23:25:04 by me                #+#    #+#             */
-/*   Updated: 2021/12/17 18:59:29 by erlazo           ###   ########.fr       */
+/*   Updated: 2021/12/19 18:00:06 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		ft_init_all(t_ph *all)
 	all->good = 1;
 
 		// is this the right place to put this?
+		// i mean i could put it at the end of the init of all the philos
 	all->start_time = ft_time_rn();
 
 	pthread_mutex_init(&all->write_lock, NULL);
@@ -87,6 +88,9 @@ int	ft_start(t_ph *all)
 		pthread_create(&all->philos[i].thread, NULL, &ft_philo_thread, (void *)&all->philos[i]);
 		++i;
 	}
+	// is this the right place for this?
+	// prolly want a return from this..
+	pthread_join(all->death, NULL);
 
 	i = 0;
 	while (i < all->iset[NPHILO])
@@ -97,9 +101,7 @@ int	ft_start(t_ph *all)
 
 		++i;
 	}
-	// is this the right place for this?
-	// prolly want a return from this..
-	pthread_join(all->death, NULL);
+
 	return (1);
 }
 

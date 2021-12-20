@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 23:33:10 by me                #+#    #+#             */
-/*   Updated: 2021/12/17 18:59:55 by erlazo           ###   ########.fr       */
+/*   Updated: 2021/12/19 08:43:48 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int	ft_print_philo_status(t_philo *boi, int msg)
 	long int		cur_time;
 	// i'm guessing i have to lock a print mutex...
 
+	if (!boi->home->good)
+		return (0);
 	pthread_mutex_lock(&boi->home->write_lock);
 	// timestamp
 	// philo id
@@ -91,10 +93,25 @@ int	ft_print_philo_status(t_philo *boi, int msg)
 	// so i could surround this with a mutex or do it directly in the func...
 	cur_time = ft_time_rn() - boi->home->start_time;
 
+/*	char	*str = NULL;
+	if (msg == GOT_FORK)
+		str = "got fork\n";
+	else if (msg == EATING)
+		str = "is eating\n";
+	else if (msg == SLEEPING)
+		str = "is sleeping\n";
+	else if (msg == THINKING)
+		str = "is thinking\n";
+	else if (msg == DIED)
+		str = "died\n";
+	printf("%ld Philo %d %s", cur_time, boi->id, str);
+*/
+
+
 	ft_putlong(cur_time);
 //	ft_putchar(' ');
 //	adding ms after time, so clearer, make sure that's ok with sujet or other peole
-	ft_putstr("ms ");
+	ft_putstr(" Philo ");
 	ft_putnbr(boi->id);
 	if (msg == GOT_FORK)
 		ft_putstr(" has taken a fork\n");
@@ -105,7 +122,8 @@ int	ft_print_philo_status(t_philo *boi, int msg)
 	else if (msg == THINKING)
 		ft_putstr(" is thinking\n");
 	else if (msg == DIED)
-		ft_putstr(" has died\n");
+		ft_putstr(" died\n");
+
 	pthread_mutex_unlock(&boi->home->write_lock);
 	return (1);
 }
