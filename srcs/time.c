@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 22:08:07 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/19 17:59:59 by me               ###   ########.fr       */
+/*   Updated: 2021/12/20 16:37:02 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,27 @@ long int	ft_time_rn(void)
 }
 
 
+// a new better msleep
+// wait am i sending micro seconds or miliseconds????
+// and if it's miliseconds how is working?
+void	msleep(long int micro_sec)
+{
+	long int	start;
+
+	start = ft_time_rn();
+	while (ft_time_rn() - start < micro_sec)
+		usleep(micro_sec / 10);
+
+}
+
 // an msleep() func, milliseconds sleep rather than usleep or sleep...
-
-
+/*
 void	msleep(long int micro_sec)
 {
 	// do i need anything else? a security?
 	usleep(micro_sec * 1000);
 }
-
+*/
 
 
 

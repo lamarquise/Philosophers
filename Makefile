@@ -79,11 +79,16 @@ fclean: clean
 
 re: fclean all
 
-tests:
+
+### Leak testing ####
+
+testf: 
 
 testl:
 
 testv:
+
+
 
 .PHONY: all clean fclean re tests testl testv
 

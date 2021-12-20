@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 23:25:04 by me                #+#    #+#             */
-/*   Updated: 2021/12/19 18:00:06 by me               ###   ########.fr       */
+/*   Updated: 2021/12/20 16:37:09 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int		ft_init_all(t_ph *all)
 
 	// Do i need to start another thread first?
 
-	i = 0;
 	if (!all)
 		return (0);
 
+//	printf("made it to start of init\n");
 	// i need a bit init all the vars area
 	all->good = 1;
 
@@ -37,19 +37,25 @@ int		ft_init_all(t_ph *all)
 	all->start_time = ft_time_rn();
 
 	pthread_mutex_init(&all->write_lock, NULL);
-	pthread_mutex_init(&all->end, NULL);
+	pthread_mutex_init(&all->check_good, NULL);
+	pthread_mutex_init(&all->check_time, NULL);
 	all->philos = (t_philo *)malloc(sizeof(t_philo) * all->iset[NPHILO]);
 	if (!all->philos)
 		return (0);
 	// i totally forgot about the forks, we may need to break this up
 	
+	i = 0;
 	while (i < all->iset[NPHILO])
 	{
 			// should it be i+1 ? or i could always add 1 when print... ?
 		all->philos[i].id = i + 1;
 //		printf("in init, philo id: %d\n", all->philos[i].id);
+		pthread_mutex_init(&all->philos[i].check_t_eaten, NULL);
+			// no need to mutex protect since no threads running yet.
 		all->philos[i].times_eaten = 0;
+		all->philos[i].finished_eating = 0;
 		//all->philos[i].last_ate = all->start_time;
+		pthread_mutex_init(&all->philos[i].check_l_ate, NULL);
 		all->philos[i].last_ate = 0;
 		all->philos[i].home = all;
 		pthread_mutex_init(&all->philos[i].l_fork, NULL);
@@ -64,6 +70,7 @@ int		ft_init_all(t_ph *all)
 	}
 
 	// maybe this part does belong is "ft_start" or something...
+//	printf("made it to end of init\n");
 
 	return (1);
 }
@@ -78,7 +85,9 @@ int	ft_start(t_ph *all)
 	if (!all)
 		return (0);
 	
+//	printf("made it to start\n");
 	// is this the right place for this?
+	// i mean it seems fine?
 	pthread_create(&all->death, NULL, &ft_death_thread, (void *)all);
 
 	i = 0;
@@ -101,6 +110,8 @@ int	ft_start(t_ph *all)
 
 		++i;
 	}
+//	printf("made it to end of start\n");
+
 
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 13:01:06 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/17 19:37:01 by erlazo           ###   ########.fr       */
+/*   Updated: 2021/12/20 16:03:23 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ int		ft_start(t_philo *all)
 // And we let it run...
 
 
-
 // will surely need a free.c but for now keeping it here
 
 int		ft_free_all_philos(t_ph *all)
@@ -141,6 +140,8 @@ int		ft_free_all_philos(t_ph *all)
 	while (i < all->iset[NPHILO])
 	{
 		pthread_mutex_destroy(&all->philos[i].l_fork);
+		pthread_mutex_destroy(&all->philos[i].check_t_eaten);
+		pthread_mutex_destroy(&all->philos[i].check_l_ate);
 		all->philos[i].r_fork = NULL;
 		all->philos[i].home = NULL;
 		++i;
@@ -151,8 +152,11 @@ int		ft_free_all_philos(t_ph *all)
 
 int		ft_free_ph_struct(t_ph *all)
 {
+	pthread_mutex_destroy(&all->check_time);
+	pthread_mutex_destroy(&all->check_good);
 	pthread_mutex_destroy(&all->write_lock);
-	pthread_mutex_destroy(&all->end);
+
+//	pthread_mutex_destroy(&all->end);
 
 	return (1);
 }

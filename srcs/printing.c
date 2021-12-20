@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 23:33:10 by me                #+#    #+#             */
-/*   Updated: 2021/12/19 08:43:48 by me               ###   ########.fr       */
+/*   Updated: 2021/12/20 15:51:01 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	ft_print_philo_status(t_philo *boi, int msg)
 	long int		cur_time;
 	// i'm guessing i have to lock a print mutex...
 
+//	printf("made it to printf\n");
 	if (!boi->home->good)
 		return (0);
 	pthread_mutex_lock(&boi->home->write_lock);

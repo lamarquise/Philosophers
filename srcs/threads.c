@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 01:01:04 by me                #+#    #+#             */
-/*   Updated: 2021/12/19 18:00:04 by me               ###   ########.fr       */
+/*   Updated: 2021/12/20 16:37:08 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	*ft_philo_thread(void *arg)
 //	pthread_mutex_unlock(&boi->home->write_lock);
 		// should i add more clever logic to when the philos should grab forks?
 	if (boi->id % 2 == 0)
-		usleep(100);
+		usleep(boi->home->iset[TTEAT] / 10);
+//		usleep(100);
 
 		// obviously this didn't work...
 //	pthread_mutex_lock(&boi->home->end);
@@ -35,8 +36,13 @@ void	*ft_philo_thread(void *arg)
 	// ok i need a way to stop this, i'm guessing when one has died...
 //	int	i = 0;
 //	while (i < 4)
-	while (boi->home->good)
+	while (boi->home->good && !boi->finished_eating)
 	{
+//		printf("made into a philo thread loop, id: %d\n", boi->id);
+//		pthread_create(&boi->death_thread, NULL, &ft_death_thread, (void *)boi->home);
+	// ok gonna try joining but will also try detatching...
+//		pthread_join(boi->death_thread, NULL);
+
 		// should these be in a dif order?
 		pthread_mutex_lock(&boi->l_fork);
 		pthread_mutex_lock(boi->r_fork);	// like this to dereference?
@@ -69,6 +75,17 @@ void	*ft_philo_thread(void *arg)
 		ft_print_philo_status(boi, SLEEPING);
 		msleep(boi->home->iset[TTSLEEP]);
 		ft_print_philo_status(boi, THINKING);
+
+//		printf("made to end of  thread loop, id: %d\n", boi->id);
+
+
+//		pthread_detach(boi->death_thread);
+
+/*		if (boi->home->iset[NEAT] != -1 && boi->times_eaten == boi->home->iset[NEAT])
+		{
+			boi->finished_eating = 1;
+		}
+*/
 			// but no sleep you could in theory start eating imediately after.
 //		++i;
 	}
@@ -117,10 +134,51 @@ int		ft_all_good(t_ph *all)
 	return (1);
 }
 
+/*
+// the new death thread
+void	*ft_death_thread(void *arg)
+{
 
+	t_philo	*boi;
+
+	boi = (t_philo *)arg;
+
+	// There's something about waiting TTDEATH + 1 or something
+		// yea 1ms seems fine to wait a little extra.
+	// mutex lock some shit, check if dead
+
+	msleep(boi->home->iset[TTDIE] + 1);
+	// now check death
+
+	pthread_mutex_lock(&boi->check_l_ate);
+	if (ft_time_rn() - boi->home->start_time - boi->last_ate > boi->home->iset[TTDIE])
+	{
+		ft_print_philo_status(boi, DIED);
+		pthread_mutex_lock(&boi->home->check_good);
+		boi->home->good = 0;
+		pthread_mutex_unlock(&boi->home->check_good);
+
+		// is the return and this unlock necessary?
+		pthread_mutex_unlock(&boi->check_l_ate);
+		return (NULL);
+	}
+	// do i need a mutex here? around times eaten?
+//	if (all->iset[NEAT] > 0 && all->philos[i].times_eaten == all->iset[NEAT])
+//		++full;
+	pthread_mutex_unlock(&boi->check_l_ate);
+	
+
+	// NULL ?
+	return (NULL);
+//	return (void);
+}
+*/
+
+// This is the old death thread
 
 // The thread that checks if a philo is dead...
 	// a thread func
+
 void	*ft_death_thread(void *arg)
 {
 //	int		i;
