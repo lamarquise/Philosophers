@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 23:25:04 by me                #+#    #+#             */
-/*   Updated: 2021/12/20 16:37:09 by erlazo           ###   ########.fr       */
+/*   Updated: 2021/12/21 02:15:19 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@ int		ft_init_all(t_ph *all)
 {
 	int	i;
 
-//	pthread_mutex_init(&all->write_lock, NULL);
-
-	// Do i need to start another thread first?
-
 	if (!all)
 		return (0);
 
@@ -34,7 +30,7 @@ int		ft_init_all(t_ph *all)
 
 		// is this the right place to put this?
 		// i mean i could put it at the end of the init of all the philos
-	all->start_time = ft_time_rn();
+	all->start_time = ft_time_rn(all);
 
 	pthread_mutex_init(&all->write_lock, NULL);
 	pthread_mutex_init(&all->check_good, NULL);
@@ -47,9 +43,7 @@ int		ft_init_all(t_ph *all)
 	i = 0;
 	while (i < all->iset[NPHILO])
 	{
-			// should it be i+1 ? or i could always add 1 when print... ?
 		all->philos[i].id = i + 1;
-//		printf("in init, philo id: %d\n", all->philos[i].id);
 		pthread_mutex_init(&all->philos[i].check_t_eaten, NULL);
 			// no need to mutex protect since no threads running yet.
 		all->philos[i].times_eaten = 0;
@@ -68,10 +62,6 @@ int		ft_init_all(t_ph *all)
 			all->philos[i].r_fork = &all->philos[i + 1].l_fork;
 		++i;
 	}
-
-	// maybe this part does belong is "ft_start" or something...
-//	printf("made it to end of init\n");
-
 	return (1);
 }
 
@@ -85,7 +75,6 @@ int	ft_start(t_ph *all)
 	if (!all)
 		return (0);
 	
-//	printf("made it to start\n");
 	// is this the right place for this?
 	// i mean it seems fine?
 	pthread_create(&all->death, NULL, &ft_death_thread, (void *)all);
@@ -107,12 +96,8 @@ int	ft_start(t_ph *all)
 		// you need to sort out the return for this..
 		// should this be in an if?
 		pthread_join(all->philos[i].thread, NULL);
-
 		++i;
 	}
-//	printf("made it to end of start\n");
-
-
 	return (1);
 }
 

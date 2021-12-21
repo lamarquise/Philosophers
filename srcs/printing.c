@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 23:33:10 by me                #+#    #+#             */
-/*   Updated: 2021/12/20 15:51:01 by erlazo           ###   ########.fr       */
+/*   Updated: 2021/12/21 02:04:17 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	ft_putlong(long int n)
 	long long			nb;
 	unsigned char	*ret;
 
-//	printf("putlong, long: %ld\n", n);
 	nb = n;
 	if (nb < 0)
 	{
@@ -78,40 +77,22 @@ void	ft_putlong(long int n)
 	// return an int?
 int	ft_print_philo_status(t_philo *boi, int msg)
 {
-	// an int? it's a long int normally, do i need to anticipate it ever being a long
-	// int? if so i need a special putnbr...
 	long int		cur_time;
-	// i'm guessing i have to lock a print mutex...
 
 //	printf("made it to printf\n");
-	if (!boi->home->good)
+
+	// this can't be right! how do i write death?
+		// i guess because good gets changed after the "write death" call?
+		// is that what i want?
+	if (ft_check_continue(boi) == 0)
 		return (0);
 	pthread_mutex_lock(&boi->home->write_lock);
-	// timestamp
-	// philo id
-	// message
 
 	// so i could surround this with a mutex or do it directly in the func...
-	cur_time = ft_time_rn() - boi->home->start_time;
-
-/*	char	*str = NULL;
-	if (msg == GOT_FORK)
-		str = "got fork\n";
-	else if (msg == EATING)
-		str = "is eating\n";
-	else if (msg == SLEEPING)
-		str = "is sleeping\n";
-	else if (msg == THINKING)
-		str = "is thinking\n";
-	else if (msg == DIED)
-		str = "died\n";
-	printf("%ld Philo %d %s", cur_time, boi->id, str);
-*/
+	cur_time = ft_time_rn(boi->home) - boi->home->start_time;
 
 
 	ft_putlong(cur_time);
-//	ft_putchar(' ');
-//	adding ms after time, so clearer, make sure that's ok with sujet or other peole
 	ft_putstr(" Philo ");
 	ft_putnbr(boi->id);
 	if (msg == GOT_FORK)

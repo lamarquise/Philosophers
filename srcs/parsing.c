@@ -6,12 +6,11 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 13:16:03 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/17 03:32:41 by me               ###   ########.fr       */
+/*   Updated: 2021/12/21 01:32:13 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 	// may do initiallizing in here too
 		// or maybe just settings... IDK yet
