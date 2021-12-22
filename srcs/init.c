@@ -6,13 +6,13 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 23:25:04 by me                #+#    #+#             */
-/*   Updated: 2021/12/22 02:47:28 by me               ###   ########.fr       */
+/*   Updated: 2021/12/22 03:58:29 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int		ft_init_all(t_ph *all)
+int	ft_init_all(t_ph *all)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ int		ft_init_all(t_ph *all)
 	pthread_mutex_init(&all->check_time, NULL);
 	i = 0;
 //	printf("all->iset[0]=%d\n", all->iset[0]);
-	while (i < all->iset[NPHILO])
+	while (i < all->iset[0])
 	{
 //		printf("init loop i=%d, nphilo=%d\n", i, all->iset[NPHILO]);
 		all->philos[i].id = i + 1;
@@ -56,27 +56,22 @@ int	ft_start(t_ph *all)
 
 	if (!all)
 		return (0);
-//	printf("start start\n");
 	if (pthread_create(&all->death, NULL, &ft_death_thread, (void *)all) != 0)
 		return (0);
 	i = 0;
-	while (i < all->iset[NPHILO])
+	while (i < all->iset[0])
 	{
 //		printf("start loop i=%d, nphilo=%d\n", i, all->iset[NPHILO]);
 		if (pthread_create(&all->philos[i].thread, NULL, \
 			&ft_philo_thread, (void *)&all->philos[i]) != 0)
 			return (0);
 		++i;
-//		printf("start end of loop\n");
 	}
-//		printf("start joining death\n");
-	
 	pthread_join(all->death, NULL);
 	i = 0;
-	while (i < all->iset[NPHILO])
+	while (i < all->iset[0])
 	{
 //		printf("start 2nd loop i=%d, nphilo=%d\n", i, all->iset[NPHILO]);
-//		printf("normal printf in start 2nd loop\n");
 		pthread_join(all->philos[i].thread, NULL);
 		++i;
 	}

@@ -6,15 +6,13 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 13:16:03 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/22 02:47:43 by me               ###   ########.fr       */
+/*   Updated: 2021/12/22 03:58:25 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-	// may do initiallizing in here too
-		// or maybe just settings... IDK yet
-int		ft_parser(char **av, t_ph *all)
+int	ft_parser(char **av, t_ph *all)
 {
 	int	i;
 
@@ -23,29 +21,16 @@ int		ft_parser(char **av, t_ph *all)
 	i = 0;
 	while (av[i])
 	{
-		// is this enough of a check?
-		// Do i need to check if there is at least 2 philos? is 1 fine? like expected? to just let him die?
-		// Yes 1 is ok
-		// should i make sure all the times things are above say 50 milliseconds?
-		// if number of times eat is 0 return directly and free what needs to be freed.
-		// could have more specific messages...
 		if (!ft_str_isdigit(av[i]))
-			return (0);
+			return (ft_error_msg("Error: args must be positive nums\n", 0));
 		all->iset[i] = ft_atoi(av[i]);
-		if (all->iset[i] <= 0)
-			return (0);
 		++i;
 	}
-	if (all->iset[NEAT] == 0)
-		return (1);
-	// more checks?
-
-//	ft_print_all_settings(all);
+	if (all->iset[4] == 0)
+		return (ft_error_msg("The Philosophers have eaten 0 times.\n", 0));
+	if (all->iset[0] > 200)
+		return (ft_error_msg("Too many Philosophers.\n", 0));
+	if (all->iset[1] < 50 || all->iset[2] < 50 || all->iset[3] < 50)
+		return (ft_error_msg("Too little time.\n", 0));
 	return (1);
 }
-
-
-
-
-
-
