@@ -6,13 +6,13 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 19:55:37 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/08/10 20:11:10 by ericlazo         ###   ########.fr       */
+/*   Updated: 2021/12/22 17:08:23 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minilib.h"
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
 	int		a;
 	long	ret;

@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 19:33:21 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/22 04:38:54 by me               ###   ########.fr       */
+/*   Updated: 2021/12/22 17:08:48 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void		*ft_memalloc(size_t size);
 **		Atoi Funcs (full)
 */
 
-int			ft_atoi(const char *str);
+long		ft_atoi(const char *str);
 char		*ft_itoa(int n);
 
 /*

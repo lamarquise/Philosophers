@@ -68,7 +68,7 @@ $(DIR_OBJ)%.o: $(DIR_MINILIB)%.c
 	printf "$(_CYAN)\r\33[2K\rCompling $@$(_END)"
 
 clean:
-	rem -rf $(DIR_OBJ)
+	rm -rf $(DIR_OBJ)
 	echo "$(_RED).o Files Deleted  😱$(_END)"
 
 fclean: clean

@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 01:01:04 by me                #+#    #+#             */
-/*   Updated: 2021/12/22 04:39:11 by me               ###   ########.fr       */
+/*   Updated: 2021/12/22 17:03:34 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_more_all_good(t_ph *all, int i)
 	if (ft_time_rn(all) - all->start_time - all->philos[i].last_ate \
 		> all->iset[TTDIE])
 	{
-		ft_print_philo_status(&all->philos[i], DIED);
+		ft_print_dead(&all->philos[i]);
 		pthread_mutex_unlock(&all->philos[i].check_l_ate);
 		return (0);
 	}
@@ -105,15 +105,13 @@ int	ft_all_good(t_ph *all)
 
 void	*ft_death_thread(void *arg)
 {
-	int		good;
 	t_ph	*all;
 
 	all = (t_ph *)arg;
 	while (all->good == 1)
 	{
-		good = ft_all_good(all);
 		pthread_mutex_lock(&all->check_good);
-		all->good = good;
+		all->good = ft_all_good(all);
 		pthread_mutex_unlock(&all->check_good);
 		usleep(100);
 	}

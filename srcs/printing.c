@@ -6,29 +6,11 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 23:33:10 by me                #+#    #+#             */
-/*   Updated: 2021/12/22 03:05:35 by me               ###   ########.fr       */
+/*   Updated: 2021/12/22 16:49:09 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	ft_print_all_settings(t_ph *all)
-{
-	int	i;
-
-	printf("--- Print All iSettings\n");
-	if (!all)
-		return (0);
-	i = 0;
-	while (i < 5)
-	{
-		ft_putnbrnl(all->iset[i]);
-		++i;
-	}
-	printf("all start time: %ld\n", all->start_time);
-	printf("--- DONE Print All iSettings\n");
-	return (1);
-}
 
 int	ft_check_continue(t_philo *boi)
 {
@@ -74,11 +56,27 @@ void	ft_putlong(long int n)
 	write(1, &ret, 1);
 }
 
+int	ft_print_dead(t_philo *boi)
+{
+	long int		cur_time;
+
+	if (!boi)
+		return (0);
+	cur_time = ft_time_rn(boi->home) - boi->home->start_time;
+	pthread_mutex_lock(&boi->home->write_lock);
+	ft_putlong(cur_time);
+	ft_putstr(" Philo ");
+	ft_putnbr(boi->id);
+	ft_putstr(" died\n");
+	pthread_mutex_unlock(&boi->home->write_lock);
+	return (1);
+}
+
 int	ft_print_philo_status(t_philo *boi, int msg)
 {
 	long int		cur_time;
 
-	if (ft_check_continue(boi) == 0)
+	if (!boi || ft_check_continue(boi) == 0)
 		return (0);
 	cur_time = ft_time_rn(boi->home) - boi->home->start_time;
 	pthread_mutex_lock(&boi->home->write_lock);

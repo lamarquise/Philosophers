@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 14:13:27 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/22 04:39:14 by me               ###   ########.fr       */
+/*   Updated: 2021/12/22 17:05:12 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define SLEEPING 2
 # define THINKING 3
 # define DIED 4
+
+# define INTMAX 2147483647
 
 typedef struct s_philo
 {
@@ -104,7 +106,7 @@ void		*ft_death_thread(void *arg);
 void		ft_putlongnl(long int nbr);
 void		ft_putlong(long int n);
 int			ft_check_continue(t_philo *boi);
-int			ft_print_all_settings(t_ph *all);
+int			ft_print_dead(t_philo *boi);
 int			ft_print_philo_status(t_philo *boi, int msg);
 
 #endif
