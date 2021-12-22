@@ -6,17 +6,15 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 23:33:10 by me                #+#    #+#             */
-/*   Updated: 2021/12/21 02:04:17 by me               ###   ########.fr       */
+/*   Updated: 2021/12/22 03:05:35 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-	// almost certainly move this...
-int		ft_print_all_settings(t_ph *all)
+int	ft_print_all_settings(t_ph *all)
 {
 	int	i;
-
 
 	printf("--- Print All iSettings\n");
 	if (!all)
@@ -32,7 +30,7 @@ int		ft_print_all_settings(t_ph *all)
 	return (1);
 }
 
-int		ft_print_all_philos(t_ph *all)
+int	ft_print_all_philos(t_ph *all)
 {
 	int	i;
 
@@ -41,13 +39,11 @@ int		ft_print_all_philos(t_ph *all)
 	{
 		ft_putstr("Last ate: ");
 		ft_putlongnl(all->philos[i].last_ate);
-
 		++i;
 	}
-
 	return (1);
 }
-	// add these to lib?
+
 void	ft_putlongnl(long int nbr)
 {
 	ft_putlong(nbr);
@@ -56,7 +52,7 @@ void	ft_putlongnl(long int nbr)
 
 void	ft_putlong(long int n)
 {
-	long long			nb;
+	long long		nb;
 	unsigned char	*ret;
 
 	nb = n;
@@ -71,27 +67,14 @@ void	ft_putlong(long int n)
 	write(1, &ret, 1);
 }
 
-// print the outputs
-// maybe print some error messages...
-
-	// return an int?
 int	ft_print_philo_status(t_philo *boi, int msg)
 {
 	long int		cur_time;
 
-//	printf("made it to printf\n");
-
-	// this can't be right! how do i write death?
-		// i guess because good gets changed after the "write death" call?
-		// is that what i want?
 	if (ft_check_continue(boi) == 0)
 		return (0);
-	pthread_mutex_lock(&boi->home->write_lock);
-
-	// so i could surround this with a mutex or do it directly in the func...
 	cur_time = ft_time_rn(boi->home) - boi->home->start_time;
-
-
+	pthread_mutex_lock(&boi->home->write_lock);
 	ft_putlong(cur_time);
 	ft_putstr(" Philo ");
 	ft_putnbr(boi->id);
@@ -105,10 +88,6 @@ int	ft_print_philo_status(t_philo *boi, int msg)
 		ft_putstr(" is thinking\n");
 	else if (msg == DIED)
 		ft_putstr(" died\n");
-
 	pthread_mutex_unlock(&boi->home->write_lock);
 	return (1);
 }
-
-
-
