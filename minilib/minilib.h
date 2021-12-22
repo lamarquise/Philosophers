@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 19:33:21 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/08/10 20:25:25 by ericlazo         ###   ########.fr       */
+/*   Updated: 2021/12/22 04:38:54 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void		ft_putnbr(int n);
 void		ft_putnbrnl(int nbr);
 void		ft_putstr(char const *s);
 void		ft_putstr_fd(char const *s, int fd);
-
 long		ft_scott_free(char **str, int ret);
 
 /*
@@ -89,7 +88,6 @@ t_ilist		*ft_ilstnew(int num);
 int			ft_ilstadd_back(t_ilist **lst, t_ilist *new);
 int			ft_ilstadd_front(t_ilist **lst, t_ilist *new);
 int			ft_ilstdel_all(t_ilist **lst);
-
 
 /*
 **		Stand Alone nList Funcs

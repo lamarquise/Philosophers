@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 13:01:06 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/22 03:50:41 by me               ###   ########.fr       */
+/*   Updated: 2021/12/22 04:36:23 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int	ft_free_all(t_ph *all)
 
 int	main(int ac, char **av)
 {
-	t_ph		all;
-	
+	t_ph	all;
+
 	if (ac == 5)
 		all.iset[4] = -1;
 	else if (ac != 6)

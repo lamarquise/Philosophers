@@ -30,17 +30,24 @@ int	ft_print_all_settings(t_ph *all)
 	return (1);
 }
 
-int	ft_print_all_philos(t_ph *all)
+int	ft_check_continue(t_philo *boi)
 {
-	int	i;
-
-	i = 0;
-	while (i < all->iset[NPHILO])
+	if (!boi)
+		return (0);
+	pthread_mutex_lock(&boi->home->check_good);
+	if (boi->home->good == 0)
 	{
-		ft_putstr("Last ate: ");
-		ft_putlongnl(all->philos[i].last_ate);
-		++i;
+		pthread_mutex_unlock(&boi->home->check_good);
+		return (0);
 	}
+	pthread_mutex_unlock(&boi->home->check_good);
+	pthread_mutex_lock(&boi->check_t_eaten);
+	if (boi->times_eaten == boi->home->iset[4])
+	{
+		pthread_mutex_unlock(&boi->check_t_eaten);
+		return (2);
+	}
+	pthread_mutex_unlock(&boi->check_t_eaten);
 	return (1);
 }
 

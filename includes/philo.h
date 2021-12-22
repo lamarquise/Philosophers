@@ -6,23 +6,19 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 14:13:27 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/22 02:43:33 by me               ###   ########.fr       */
+/*   Updated: 2021/12/22 04:39:14 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-// some useful generic Includes
-
-	// printf is allowed :)
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <pthread.h>
 
-	// need it...
 # include "minilib.h"
 
 # define NPHILO 0
@@ -45,24 +41,30 @@ typedef struct s_philo
 	pthread_mutex_t	check_t_eaten;
 	int				times_eaten;
 	pthread_mutex_t	check_l_ate;
-	long int		last_ate;	// so this is time it last ate - start time
+	long int		last_ate;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	l_fork;
 }				t_philo;
 
-
 typedef struct s_ph
 {
 	pthread_t			death;
-	t_philo				*philos;	// will end up being a table of pointers to struct.
-	int					iset[5];	// initial settings.
-	pthread_mutex_t	write_lock;
+	t_philo				*philos;
+	int					iset[5];
+	pthread_mutex_t		write_lock;
 	pthread_mutex_t		check_good;
 	int					good;
 	pthread_mutex_t		check_time;
 	long int			start_time;
 }				t_ph;
 
+/*
+**		Main
+*/
+
+int			ft_free_all_philos(t_ph *all);
+int			ft_free_ph_struct(t_ph *all);
+int			ft_free_all(t_ph *all);
 
 /*
 **		Parser
@@ -81,6 +83,7 @@ void		msleep(t_ph *all, long int millisec);
 **		Init
 */
 
+int			ft_more_init(t_ph *all);
 int			ft_init_all(t_ph *all);
 int			ft_start(t_ph *all);
 
@@ -88,17 +91,19 @@ int			ft_start(t_ph *all);
 **		Threads
 */
 
-int			ft_check_continue(t_philo *boi);
+int			ft_more_philo_thread(t_philo *boi);
 void		*ft_philo_thread(void *arg);
+int			ft_more_all_good(t_ph *all, int i);
+int			ft_all_good(t_ph *all);
 void		*ft_death_thread(void *arg);
 
 /*
 **		Printing
 */
 
-int			ft_print_all_philos(t_ph *all);
 void		ft_putlongnl(long int nbr);
 void		ft_putlong(long int n);
+int			ft_check_continue(t_philo *boi);
 int			ft_print_all_settings(t_ph *all);
 int			ft_print_philo_status(t_philo *boi, int msg);
 
