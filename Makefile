@@ -31,8 +31,6 @@ SRCS_MINILIB	=	atoi_funcs.c \
 					put_funcs.c \
 					str_funcs.c \
 					tab_funcs.c \
-					gnl.c \
-					gnl_utils.c \
 
 
 DIR_INC		=	./includes/
