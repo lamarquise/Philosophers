@@ -5,6 +5,7 @@ CFLAGS		=	-Wall -Werror -Wextra -pthread
 # might need to add -pthread somewhere could do it in flags
 
 NAME		=	philo
+BONUS		=	philo_bonus
 
 DIR_PHILO	=	./srcs/
 
@@ -14,6 +15,15 @@ SRCS_PHILO	=	philo_main.c \
 				threads.c \
 				printing.c \
 				time.c \
+
+SRCS_BPH	=	philo_bonus_main.c \
+				parsing_bonus.c \
+				init_bonus.c \
+				processes.c \
+				printing_bonus.c \
+				time_bonus.c \
+
+
 
 
 # may move these to be in the SRCS folder, if the cors are gonna get all annoying about it...
@@ -44,17 +54,25 @@ DIR_OBJ		=	./objs/
 
 OBJ_MINILIB	=	$(SRCS_MINILIB:.c=.o)
 OBJ_PHILO	=	$(SRCS_PHILO:.c=.o) $(OBJ_MINILIB)
+OBJ_BPH		=	$(SRCS_BPH:.c=.o) $(OBJ_MINILIB)
 
 OBJS_PHILO	=	$(addprefix $(DIR_OBJ),$(OBJ_PHILO))
+OBJS_BPH	=	$(addprefix $(DIR_OBJ),$(OBJ_BPH))
 
 
 ##### RULES ######
 
 all: $(NAME)
 
+bonus: $(BONUS)
+
 $(NAME): $(OBJS_PHILO)
 	$(CC) $(CFLAGS) $(ALL_INCS) $(OBJS_PHILO) -o $(NAME)
 	printf "$(_GREEN)\r\33[2K\r$(NAME) created  😎\n$(_END)"
+
+$(BONUS): $(OBJS_BPH)
+	$(CC) $(CFLAGS) $(ALL_INCS) $(OBJS_BPH) -o $(BONUS)
+	printf "$(_GREEN)\r\33[2K\r$(BONUS) created  😎\n$(_END)"
 
 
 $(DIR_OBJ)%.o: $(DIR_PHILO)%.c
@@ -72,10 +90,12 @@ clean:
 	echo "$(_RED).o Files Deleted  😱$(_END)"
 
 fclean: clean
-	rm -rf $(NAME)
-	echo "$(_RED)$(NAME) Deleted  😱$(_END)"
+	rm -rf $(NAME) $(BONUS)
+	echo "$(_RED)$(NAME) and $(BONUS) Deleted  😱$(_END)"
 
 re: fclean all
+
+rebonus: fclean bonus
 
 
 ### Leak testing ####
@@ -88,7 +108,7 @@ testv:
 
 
 
-.PHONY: all clean fclean re tests testl testv
+.PHONY: all clean fclean re bonus rebonus tests testl testv
 
 .SILENT:
 

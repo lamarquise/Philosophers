@@ -1,17 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printing.c                                         :+:      :+:    :+:   */
+/*   printing_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 23:33:10 by me                #+#    #+#             */
-/*   Updated: 2022/01/02 00:23:46 by me               ###   ########.fr       */
+/*   Updated: 2022/01/02 18:45:15 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
+int	ft_check_continue(t_philo *boi)
+{
+	if (!boi)
+		return (0);
+
+	printf("in check continue\n");
+	// 
+
+	sem_wait(boi->home->check_good);
+	if (boi->home->good == 0)
+	{
+		sem_post(boi->home->check_good);
+		return (0);
+	}
+	sem_post(boi->home->check_good);
+	// will i need semaphores here too? or is it a completely different mechanism?
+//	pthread_mutex_lock(&boi->check_t_eaten);
+	if (boi->times_eaten == boi->home->iset[4])
+	{
+//		pthread_mutex_unlock(&boi->check_t_eaten);
+		return (2);
+	}
+//	pthread_mutex_unlock(&boi->check_t_eaten);
+	return (1);
+}
+
+/*
 int	ft_check_continue(t_philo *boi)
 {
 	if (!boi)
@@ -32,6 +59,7 @@ int	ft_check_continue(t_philo *boi)
 	pthread_mutex_unlock(&boi->check_t_eaten);
 	return (1);
 }
+*/
 
 void	ft_putlongnl(long int nbr)
 {
@@ -63,12 +91,12 @@ int	ft_print_dead(t_philo *boi)
 	if (!boi)
 		return (0);
 	cur_time = ft_time_rn(boi->home) - boi->home->start_time;
-	pthread_mutex_lock(&boi->home->write_lock);
+	sem_wait(boi->home->write_lock);
 	ft_putlong(cur_time);
 	ft_putstr(" Philo ");
 	ft_putnbr(boi->id);
 	ft_putstr(" died\n");
-	pthread_mutex_unlock(&boi->home->write_lock);
+	sem_post(boi->home->write_lock);
 	return (1);
 }
 
@@ -76,10 +104,13 @@ int	ft_print_philo_status(t_philo *boi, int msg)
 {
 	long int		cur_time;
 
-	if (!boi || ft_check_continue(boi) == 0)
+//	if (!boi || ft_check_continue(boi) == 0)
+//		return (0);
+	if (!boi)
 		return (0);
 	cur_time = ft_time_rn(boi->home) - boi->home->start_time;
-	pthread_mutex_lock(&boi->home->write_lock);
+
+	sem_wait(boi->home->write_lock);
 	ft_putlong(cur_time);
 	ft_putstr(" Philo ");
 	ft_putnbr(boi->id);
@@ -91,8 +122,6 @@ int	ft_print_philo_status(t_philo *boi, int msg)
 		ft_putstr(" is sleeping\n");
 	else if (msg == THINKING)
 		ft_putstr(" is thinking\n");
-	else if (msg == DIED)
-		ft_putstr(" died\n");
-	pthread_mutex_unlock(&boi->home->write_lock);
+	sem_post(boi->home->write_lock);
 	return (1);
 }

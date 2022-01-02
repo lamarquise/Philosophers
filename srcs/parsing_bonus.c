@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 13:16:03 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/25 03:35:44 by me               ###   ########.fr       */
+/*   Updated: 2021/12/26 01:18:19 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+// i need a sparate parser too cuz the .h is dif cuz dif ph structs...
+#include "philo_bonus.h"
 
 int	ft_parser(char **av, t_ph *all)
 {
