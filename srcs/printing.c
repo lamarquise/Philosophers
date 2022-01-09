@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 23:33:10 by me                #+#    #+#             */
-/*   Updated: 2022/01/02 00:23:46 by me               ###   ########.fr       */
+/*   Updated: 2022/01/09 21:33:52 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ int	ft_print_philo_status(t_philo *boi, int msg)
 		ft_putstr(" is sleeping\n");
 	else if (msg == THINKING)
 		ft_putstr(" is thinking\n");
-	else if (msg == DIED)
-		ft_putstr(" died\n");
 	pthread_mutex_unlock(&boi->home->write_lock);
 	return (1);
 }
